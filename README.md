@@ -1,2 +1,2 @@
 # GIE
-Employees management system
+Goupement d'Interet Economique
