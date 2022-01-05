@@ -6,7 +6,6 @@ from kivymd.uix.button import MDFlatButton
 from kivy.animation import Animation
 from kivymd.uix.expansionpanel import MDExpansionPanel, MDExpansionPanelThreeLine
 from kivy.clock import Clock
-from kivymd import images_path
 import backend
 
 class Body(MDBoxLayout):

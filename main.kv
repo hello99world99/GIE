@@ -110,7 +110,6 @@
                     MenuButton:
                         id: addYear
                         text: str()
-                        size_hint: (0, 0)
                         font_size: self.height-19
                 MDBoxLayout:
                     orientation: "horizontal"
@@ -309,15 +308,11 @@
                     orientation: "horizontal"
                     padding: 9
                     MenuButton:
-                        text: "[color=#000000][size=19][b]Accorder[/size][/b][/color]"
-                        size_hint: (0.75, 0.5)
-                        pos_hint: {"center_x": 0.5,}
+                        text: "Accorder"
                         md_bg_color: (0, 1, 0, 1)
                         on_press: root.setDette(idForDette.text)
                     MenuButton:
-                        text: "[color=#000000][size=19][b]Annuler[/size][/b][/color]"
-                        size_hint: (0.75, 0.5)
-                        pos_hint: {"center_x": 0.5,}
+                        text: "Annuler"
                         md_bg_color: (1, 0, 0, 1)
                         on_press: root.clearDette()
 
@@ -380,13 +375,11 @@
                         cols: 2
                         MenuButton:
                             text: "[color=#000000][size=19][b]Mettre à jour[/size][/b][/color]"
-                            size_hint: (0.5, 0.5)
                             md_bg_color: (0, 1, 0, 1)
                             on_press: root.setUpdate(idToUpdate.text)
                         MenuButton:
                             text: "[color=#000000][size=19][b]Annuler[/size][/b][/color]"
                             md_bg_color: (1, 0, 0, 1)
-                            size_hint: (0.5, 0.5)
                             on_press: root.clearUpdateID()
 
 <HeaderButton@ToggleButton>:
@@ -395,7 +388,6 @@
     markup: True
 
 <MenuButton@MDFlatButton>:
-    size_hint: (1, 1)
     theme_text_color: "Custom"
     text_color: (1, 1, 1, 1)
     markup: True
@@ -455,7 +447,6 @@
             adaptive_height: True
             MDFillRoundFlatButton:
                 id: identifiant
-                size_hint: (0.5, 0.5)
                 pos_hint: {"center_x": 0.5, "center_y": 0.5}
                 font_size: self.height-19
     
