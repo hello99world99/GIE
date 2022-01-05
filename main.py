@@ -456,8 +456,8 @@ class Main(MDApp):
     title = "GIE"
 
     def build(self):
-        self.theme_cls.theme_style = "Dark"
-        self.theme_cls.primary_palette = "Green"
+        self.theme_cls.theme_style = "Light"
+        self.theme_cls.primary_palette = "Blue"
         return Body()
 
 if __name__=="__main__":

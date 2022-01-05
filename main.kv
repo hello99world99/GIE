@@ -46,7 +46,7 @@
                     EnregInput:
                         id: enreg_firstName_input
                         hint_text: "Prénom"
-                        focus: True
+                        #focus: True
                 MDBoxLayout:
                     orientation: "vertical"
                     InfosLabel:
@@ -79,18 +79,19 @@
                 InfosLabel:
                     id: enreg_infos
                     text: "Status de l'enregistrement"
-                MDGridLayout:
-                    cols: 2
-                    MenuButton:
-                        text: "[color=#000000][size=19][b]Enregistrer[/b][/size][/color]"
-                        md_bg_color: (0, 1, 0, 1)
-                        theme_text_color: "Custom"
-                        text_color: (0, 0, 0, 1)
+                MDBoxLayout:
+                    orientation: 'horizontal'
+                    spacing: '10dp'
+                    Button:
+                        text: "[size=19][b]Enregistrer[/b][/size]"
                         on_release: root.saveRecords()
-                    MenuButton:
-                        text: "[color=#000000][size=19][b]Annuler[/b][/size][/color]"
-                        md_bg_color: (1, 0, 0, 1)
+                        markup: True
+                        background_color: app.theme_cls.primary_color
+                    Button:
+                        text: "[size=19][b]Annuler[/b][/size]"
                         on_release: root.cancelEnregistrement()
+                        markup: True
+                        background_color: (1, 0, 0, 1)
 
         MDScreen:
             name: "paiement"
@@ -256,20 +257,22 @@
                 MDBoxLayout:
                     orientation: "horizontal"
                     size_hint: (1, 0.1)
-                    MenuButton:
+                    spacing: '10dp'
+                    Button:
                         id: prv
-                        text: "[size=24][b]Précedant[/b][/size]"
-                        md_bg_color: (0, 1, 0, 1)
-                        theme_text_color: "Custom"
-                        text_color: (0, 0, 0, 1)
+                        text: "[b]Précedant[/b]"
+                        font_size: "19dp"
+                        background_color: app.theme_cls.primary_color
                         on_press: root.preview()
-                    MenuButton:
+                        markup: True
+                    Button:
                         id: svt
-                        text: "[size=24][b]Suivant[b][/size]"
-                        md_bg_color: (0, 1, 0, 1)
-                        theme_text_color: "Custom"
-                        text_color: (0, 0, 0, 1)
+                        text: "[b]Suivant[b]"
+                        font_size: "19dp"
+                        background_color: app.theme_cls.primary_color
                         on_press: root.next()
+                        markup: True
+
         MDScreen:
             name: "dette"
             MDBoxLayout:
@@ -306,14 +309,17 @@
                     markup: True
                 MDBoxLayout:
                     orientation: "horizontal"
-                    padding: 9
-                    MenuButton:
+                    padding: 24
+                    spacing: '10dp'
+                    Button:
                         text: "Accorder"
-                        md_bg_color: (0, 1, 0, 1)
+                        font_size: "24dp"
+                        background_color: app.theme_cls.primary_color
                         on_press: root.setDette(idForDette.text)
-                    MenuButton:
+                    Button:
                         text: "Annuler"
-                        md_bg_color: (1, 0, 0, 1)
+                        font_size: "24dp"
+                        background_color: (1, 0, 0, 1)
                         on_press: root.clearDette()
 
         MDScreen:
@@ -372,19 +378,26 @@
                         height: 0
                         padding: (0, 0)
                     MDBoxLayout:
-                        cols: 2
-                        MenuButton:
-                            text: "[color=#000000][size=19][b]Mettre à jour[/size][/b][/color]"
-                            md_bg_color: (0, 1, 0, 1)
+                        orientation: 'horizontal'
+                        size_hint: (1, 0.1)
+                        padding: 9
+                        spacing: '10dp'
+                        Button:
+                            text: "[b]Mettre à jour[/b]"
+                            font_size: "19dp"
+                            background_color: app.theme_cls.primary_color
                             on_press: root.setUpdate(idToUpdate.text)
-                        MenuButton:
-                            text: "[color=#000000][size=19][b]Annuler[/size][/b][/color]"
-                            md_bg_color: (1, 0, 0, 1)
+                            markup: True
+                        Button:
+                            text: "[b]Annuler[/b]"
+                            background_color: (1, 0, 0, 1)
+                            font_size: "19dp"
                             on_press: root.clearUpdateID()
+                            markup: True
 
 <HeaderButton@ToggleButton>:
     group: "menu"
-    background_color: "#00ff00"
+    background_color: app.theme_cls.primary_color
     markup: True
 
 <MenuButton@MDFlatButton>:
