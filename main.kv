@@ -455,21 +455,20 @@
         orientation: "horizontal"
         adaptive_height: True
         padding: 6
-        MDBoxLayout:
-            orientation: "vertical"
-            adaptive_height: True
-            MDFillRoundFlatButton:
-                id: identifiant
-                pos_hint: {"center_x": 0.5, "center_y": 0.5}
-                font_size: self.height-19
+        MDLabel:
+            id: identifiant
+            halign: "center"
+            font_size: self.height-19
     
         MDBoxLayout:
             orientation: "vertical"
             adaptive_height: True
             InfosLabel:
-                text: "[color=#ffff00][b][u]EMPLOYER[/u][/b][/color]"
+                text: "[b][u]EMPLOYER[/u][/b]"
                 halign: "left"
                 font_size: 24
+                theme_text_color: "Custom"
+                text_color: app.theme_cls.primary_color
             InfosLabel:
                 id: icontent_user
                 halign: "left"
@@ -478,6 +477,8 @@
                 id: icontent_salaire
                 halign: "left"
                 font_size: 24
+                theme_text_color: "Custom"
+                text_color: app.theme_cls.primary_color
             InfosLabel:
                 id: icontent_user_date
                 halign: "left"
@@ -486,9 +487,11 @@
             orientation: "vertical"
             adaptive_height: True
             InfosLabel:
-                text: "[color=#ffff00][b][u]TUTEUR[/u][/b][/color]"
+                text: "[b][u]TUTEUR[/u][/b]"
                 halign: "left"
                 font_size: 24
+                theme_text_color: "Custom"
+                text_color: app.theme_cls.primary_color
             InfosLabel:
                 id: icontent_tuteur
                 halign: "left"
@@ -497,6 +500,8 @@
                 id: icontent_tuteur_contact
                 halign: "left"
                 font_size: 24
+                theme_text_color: "Custom"
+                text_color: app.theme_cls.primary_color
             InfosLabel:
                 id: icontent_tuteur_adress
                 halign: "left"

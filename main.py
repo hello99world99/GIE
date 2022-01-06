@@ -216,10 +216,10 @@ class Body(MDBoxLayout):
                 content[i] = Icontent()
                 content[i].ids["identifiant"].text = f"{to_display[i][0]}"
                 content[i].ids["icontent_user"].text = f"[b]{to_display[i][1]} {to_display[i][2]} {to_display[i][3]}[/b]"
-                content[i].ids["icontent_salaire"].text = f"[b][color=#ffff00]{userDateIn[1][2]} F CFA[/color][/b]"
+                content[i].ids["icontent_salaire"].text = f"[b]{userDateIn[1][2]} F CFA[/b]"
                 content[i].ids["icontent_user_date"].text = f"[i]{userDateIn[1][0]}[/i]"
                 content[i].ids["icontent_tuteur"].text = f"[b]{userDateIn[2][0]} {userDateIn[2][1]}[/b]"
-                content[i].ids["icontent_tuteur_contact"].text = f"[b][color=#ffff00]{userDateIn[2][2]}[/color][/b]"
+                content[i].ids["icontent_tuteur_contact"].text = f"[b]{userDateIn[2][2]}[/b]"
                 content[i].ids["icontent_tuteur_adress"].text = f"[i]{userDateIn[2][3]}[/i]"
                 self.ids["employees_list"].add_widget(
                     content[i]
@@ -322,6 +322,7 @@ class Body(MDBoxLayout):
                 self.ids["detteInfos"].text = "[color=#ffff00]Aucun(e) employée trouvée...[/color]"
                 Clock.schedule_once(self.hideDetteInfos, 3)
             elif (userID!="" and montant.isnumeric() and userInfos!=[]):
+
                 if (int(montant)<1000):
                     self.ids["detteInfos"].text = "[color=#ffff00]Montant inférieur à (1 000 F)[/color]"
                     Clock.schedule_once(self.hideDetteInfos, 3)
@@ -331,6 +332,7 @@ class Body(MDBoxLayout):
                     self.clearDette()
                     self.ids["detteInfos"].text = "[color=#00ff00]Dette accorder avec succès...[/color]"
                     Clock.schedule_once(self.hideDetteInfos, 3)
+
             else:
                 self.ids["detteInfos"].text = "[color=#ffff00]Montant invalide...[/color]"
                 Clock.schedule_once(self.hideDetteInfos, 3)
