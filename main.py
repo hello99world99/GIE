@@ -1,3 +1,4 @@
+import datetime
 import time
 from kivymd.app import MDApp
 from kivymd.uix.boxlayout import MDBoxLayout
@@ -116,7 +117,7 @@ class Body(MDBoxLayout):
                             on_press = lambda x: self.insertIntoMois(ID, year)
                         )
                     else:
-                        for i in range(len(self.table[0])):#Code slow for about 2.20 seconds
+                        for i in range(len(self.table[0])): #Code slow for about 2.20 seconds
                             self.ids[Body.MONTH[i]].text = str(self.table[0][i])
                 else:
                     self.hideButton()
@@ -133,7 +134,6 @@ class Body(MDBoxLayout):
 
     def hideButton(self):
         self.ids["addYear"].text = ""
-        self.ids["addYear"].size_hint = (0, 0)
         self.ids["addYear"].bind(
             on_press = lambda x: None
         )
@@ -414,13 +414,13 @@ class Body(MDBoxLayout):
             pass
     
     def on_save(self, instance, value, date_range):
-        return value
+        self.ids.updateDateEntrer.text = str(value)
 
     def on_cancel(self, instance, value):
         '''Events called when the "CANCEL" dialog box button is clicked.'''
 
-    def show_date_picker(self, instance):
-        date_dialog = MDDatePicker()
+    def show_date_picker(self):
+        date_dialog = MDDatePicker() #max_date=datetime.datetime.now()
         date_dialog.bind(on_save=self.on_save, on_cancel=self.on_cancel)
         date_dialog.open()
 
@@ -470,7 +470,7 @@ class Main(MDApp):
     title = "GIE"
 
     def build(self):
-        self.theme_cls.theme_style = "Light"
+        self.theme_cls.theme_style = "Dark"
         self.theme_cls.primary_palette = "Blue"
         return Body()
 
