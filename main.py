@@ -5,6 +5,7 @@ from kivymd.uix.label import MDLabel
 from kivymd.uix.button import MDFlatButton
 from kivy.animation import Animation
 from kivymd.uix.expansionpanel import MDExpansionPanel, MDExpansionPanelThreeLine
+from kivymd.uix.picker import MDDatePicker
 from kivy.clock import Clock
 import backend
 
@@ -411,6 +412,17 @@ class Body(MDBoxLayout):
                 self.ids[ids].text = ""
         except AttributeError:
             pass
+    
+    def on_save(self, instance, value, date_range):
+        return value
+
+    def on_cancel(self, instance, value):
+        '''Events called when the "CANCEL" dialog box button is clicked.'''
+
+    def show_date_picker(self, instance):
+        date_dialog = MDDatePicker()
+        date_dialog.bind(on_save=self.on_save, on_cancel=self.on_cancel)
+        date_dialog.open()
 
     def clearUpdateID(self):
         self.ids["idToUpdate"].text = ""

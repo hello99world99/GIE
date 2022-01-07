@@ -1,4 +1,5 @@
 #:kivy 2.0.0
+##:kivymd 0.104.2
 
 <Body>:
     orientation: "vertical"
@@ -18,9 +19,9 @@
             on_press: year.text = ""
         HeaderButton:
             text: "[b]EMPLOYEES[/b]"
-            on_press: root.showTitle()
+            on_press: root.hideTitle()
             on_press: sm.current = "employees"
-            on_press: searchId.text = "Filtre"
+            on_press: searchId.text = "tous"
         HeaderButton:
             text: "[b]DETTE[/b]"
             on_press: root.showTitle()
@@ -242,7 +243,6 @@
                         text: "Filtre"
                         hint_text: "Entrer un nom..."
                         font_size: self.height-19
-                        on_text: root.hideTitle()
                         on_text: root.showEmployeesList(self.text)
                         markup: True
                 UpdateGrid:
@@ -364,9 +364,10 @@
                         id: updateTuteurContact
                         hint_text: "Contact du tuteur"
                 UpdateGrid:
-                    UpdateInput:
+                    Button:
                         id: updateDateEntrer
-                        hint_text: "Date d'entrer"
+                        text: "Date d'entrer"
+                        on_press: root.show_date_picker(self)
                     UpdateInput:
                         id: updateAdressTuteur
                         hint_text: "Adresse du tuteur"
