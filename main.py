@@ -36,8 +36,6 @@ class Body(MDBoxLayout):
         "septembre", "octobre", "novembre", "decembre"
     ]
 
-    start, end = (0, 4)
-
     def saveRecords(self):
         prenomValue = self.ids["enreg_firstName_input"].text.capitalize()
         surnomValue = self.ids["enreg_surname_input"].text.capitalize()
@@ -204,6 +202,7 @@ class Body(MDBoxLayout):
         self.ids["employees_list"].clear_widgets()
         to_find = filtre.capitalize()
         employees = []
+        self.start, self.end = (0, 4)
         if (to_find==""):
             pass
         else:
@@ -211,7 +210,7 @@ class Body(MDBoxLayout):
         if (employees==[]):
             pass
         else:
-            to_display = employees[Body.start:Body.end]
+            to_display = employees[self.start:self.end]
             self.limit = len(employees)
             content = list(range(len(employees)))
             for i in range(len(to_display)):
@@ -270,9 +269,16 @@ class Body(MDBoxLayout):
                         print("Autre cas non specifier...")
                 except (IndexError, ValueError):
                     pass
+            self.ids['page_range'].clear_widgets()
 
-                for i in range(round(self.limit/4)):
-                    self.ids['page_range'].add_widget(MDSwiperItem)
+            for i in range(round(self.limit / 4)):
+
+                self.ids['page_range'].add_widget(
+                    MDRoundFlatButton(
+                        text=str(i + 1),
+                        on_press=lambda x: print(i)
+                    )
+                )
 
     def getUserDateIn(self, ID):
         userID = backend.DataBase.getEmployeeByID(ID)
@@ -281,20 +287,20 @@ class Body(MDBoxLayout):
     def next(self):
         try:
             if (Body.end >= self.limit):
-                self.ids["svt"].stat = "Desabled"
+                self.ids["svt"].stat = "Disabled"
             else:
-                Body.start = Body.end
-                Body.end += 4
+                self.start = self.end
+                self.end += 4
                 self.showEmployeesList(self.ids.searchId.text)
         except AttributeError:
             pass
 
     def preview(self):
-        if Body.end <= 4:
-            self.ids["prv"].end = "Desabled"
+        if self.end <= 4:
+            self.ids["prv"].end = "Disabled"
         else:
-            Body.end -= 4
-            Body.start -= 4
+            self.end -= 4
+            self.start -= 4
             self.showEmployeesList(self.ids.searchId.text)
 
 #================================Dette==========================================

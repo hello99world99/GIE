@@ -1,0 +1,52 @@
+<HeaderButton@ToggleButton>:
+    group: "menu"
+    background_color: app.theme_cls.primary_color
+    markup: True
+
+<MenuButton@MDFlatButton>:
+    theme_text_color: "Custom"
+    text_color: (1, 1, 1, 1)
+    markup: True
+
+<EnregLabel@MDLabel>:
+    font_style: "H5"
+    theme_text_color: "Primary"
+    size_hint_x: None
+
+<EnregInput@MDTextFieldRect>:
+    multiline: False
+    font_size: self.height-19
+
+<PaiementInput@MDTextFieldRect>:
+    multiline: False
+    font_size: self.height-19
+    halign: "center"
+
+<InfosLabel@MDLabel>:
+    text: str()
+    halign: "center"
+    font_style: "H5"
+    theme_text_color: "Primary"
+    markup: True
+
+<InputInToolbar@MDTextFieldRect>:
+    hint_text: "Identifiant..."
+    multiline: False
+    size_hint: (0.75, 0.8)
+    font_size: self.height-19
+
+<UpdateLabel@MDLabel>:
+    font_style: "H5"
+    theme_text_color: "Primary"
+    size_hint: (0.5, 1)
+    pos_hint: {"center_x": 0.5, "center_y": 0.5}
+    spacing: 9
+
+<UpdateInput@MDTextFieldRect>:
+    multiline: False
+    font_size: self.height-19
+
+<UpdateGrid@MDGridLayout>:
+    cols: 2
+    size_hint: (1, 1)
+    padding: 9

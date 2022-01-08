@@ -1,4 +1,5 @@
 #:kivy 2.0.0
+#:include components.kv
 ##:kivymd 0.104.2
 
 <Body>:
@@ -266,9 +267,14 @@
 
                     MDBoxLayout:
                         orientation: 'horizontal'
-                        MDSwiper:
-                            id: page_range
-                            #on_swipe: self.get_current_item().ids.icon.shake()
+                        ScrollView:
+                            do_scroll_x: True
+                            do_scroll_y: False
+                            adaptive_width: True
+                            MDBoxLayout:
+                                id: page_range
+                                orientation: "horizontal"
+                                adaptive_width: True
 
                     MDIconButton:
                         id: svt
@@ -398,120 +404,3 @@
                             font_size: "19dp"
                             on_press: root.clearUpdateID()
                             markup: True
-
-<HeaderButton@ToggleButton>:
-    group: "menu"
-    background_color: app.theme_cls.primary_color
-    markup: True
-
-<MenuButton@MDFlatButton>:
-    theme_text_color: "Custom"
-    text_color: (1, 1, 1, 1)
-    markup: True
-
-<EnregLabel@MDLabel>:
-    font_style: "H5"
-    theme_text_color: "Primary"
-    size_hint_x: None
-
-<EnregInput@MDTextFieldRect>:
-    multiline: False
-    font_size: self.height-19
-
-<PaiementInput@MDTextFieldRect>:
-    multiline: False
-    font_size: self.height-19
-    halign: "center"
-
-<InfosLabel@MDLabel>:
-    text: str()
-    halign: "center"
-    font_style: "H5"
-    theme_text_color: "Primary"
-    markup: True
-
-<InputInToolbar@MDTextFieldRect>:
-    hint_text: "Identifiant..."
-    multiline: False
-    size_hint: (0.75, 0.8)
-    font_size: self.height-19
-
-<UpdateLabel@MDLabel>:
-    font_style: "H5"
-    theme_text_color: "Primary"
-    size_hint: (0.5, 1)
-    pos_hint: {"center_x": 0.5, "center_y": 0.5}
-    spacing: 9
-
-<UpdateInput@MDTextFieldRect>:
-    multiline: False
-    font_size: self.height-19
-
-<UpdateGrid@MDGridLayout>:
-    cols: 2
-    size_hint: (1, 1)
-    padding: 9
-
-<IContent@MDBoxLayout>:
-    orientation: "vertical"
-    adaptive_height: True
-    MDBoxLayout:
-        orientation: "horizontal"
-        adaptive_height: True
-        padding: 6
-        spacing: '19dp'
-
-        MDLabel:
-            id: identifiant
-            halign: "center"
-            font_size: self.height-19
-            radius: "19dp"
-    
-        MDBoxLayout:
-            orientation: "vertical"
-            adaptive_height: True
-            InfosLabel:
-                text: "[b][u]EMPLOYER[/u][/b]"
-                halign: "left"
-                font_size: 24
-                theme_text_color: "Custom"
-                text_color: app.theme_cls.primary_color
-            InfosLabel:
-                id: icontent_user
-                halign: "left"
-                font_size: 24
-            InfosLabel:
-                id: icontent_salaire
-                halign: "left"
-                font_size: 24
-                theme_text_color: "Custom"
-                text_color: app.theme_cls.primary_color
-            InfosLabel:
-                id: icontent_user_date
-                halign: "left"
-                font_size: 24
-        MDBoxLayout:
-            orientation: "vertical"
-            adaptive_height: True
-            InfosLabel:
-                text: "[b][u]TUTEUR[/u][/b]"
-                halign: "left"
-                font_size: 24
-                theme_text_color: "Custom"
-                text_color: app.theme_cls.primary_color
-            InfosLabel:
-                id: icontent_tuteur
-                halign: "left"
-                font_size: 24
-            InfosLabel:
-                id: icontent_tuteur_contact
-                halign: "left"
-                font_size: 24
-                theme_text_color: "Custom"
-                text_color: app.theme_cls.primary_color
-            InfosLabel:
-                id: icontent_tuteur_adress
-                halign: "left"
-                font_size: 24
-    MDSeparator:
-        height: 9

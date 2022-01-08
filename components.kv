@@ -1,0 +1,65 @@
+#:include customWidgets.kv
+
+<IContent@MDBoxLayout>:
+    orientation: "vertical"
+    adaptive_height: True
+    MDBoxLayout:
+        orientation: "horizontal"
+        adaptive_height: True
+        padding: 6
+        spacing: '19dp'
+
+        MDLabel:
+            id: identifiant
+            halign: "center"
+            font_size: self.height-19
+            radius: "19dp"
+
+        MDBoxLayout:
+            orientation: "vertical"
+            adaptive_height: True
+            InfosLabel:
+                text: "[b][u]EMPLOYER[/u][/b]"
+                halign: "left"
+                font_size: 24
+                theme_text_color: "Custom"
+                text_color: app.theme_cls.primary_color
+            InfosLabel:
+                id: icontent_user
+                halign: "left"
+                font_size: 24
+            InfosLabel:
+                id: icontent_salaire
+                halign: "left"
+                font_size: 24
+                theme_text_color: "Custom"
+                text_color: app.theme_cls.primary_color
+            InfosLabel:
+                id: icontent_user_date
+                halign: "left"
+                font_size: 24
+        MDBoxLayout:
+            orientation: "vertical"
+            adaptive_height: True
+            InfosLabel:
+                text: "[b][u]TUTEUR[/u][/b]"
+                halign: "left"
+                font_size: 24
+                theme_text_color: "Custom"
+                text_color: app.theme_cls.primary_color
+            InfosLabel:
+                id: icontent_tuteur
+                halign: "left"
+                font_size: 24
+            InfosLabel:
+                id: icontent_tuteur_contact
+                halign: "left"
+                font_size: 24
+                theme_text_color: "Custom"
+                text_color: app.theme_cls.primary_color
+            InfosLabel:
+                id: icontent_tuteur_adress
+                halign: "left"
+                font_size: 24
+    MDSeparator:
+        height: 9
