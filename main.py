@@ -481,6 +481,7 @@ class PageSwiperIndex(MDSwiperItem):
         pass
 
 class Main(MDApp):
+
     title = "GIE"
 
     def build(self):
