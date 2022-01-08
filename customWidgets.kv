@@ -13,14 +13,23 @@
     theme_text_color: "Primary"
     size_hint_x: None
 
-<EnregInput@MDTextFieldRect>:
+<EnregInput@MDTextField>:
     multiline: False
-    font_size: self.height-19
+    max_text_length: 13
+    font_size: '38dp'
+    halign: "left"
+    helper_text: "Attention..."
+    helper_text_mode: "on_error"
 
-<PaiementInput@MDTextFieldRect>:
+<PaiementInput@MDTextField>:
     multiline: False
-    font_size: self.height-19
-    halign: "center"
+    max_text_length: 6
+    font_size: '38dp'
+    halign: "right"
+    helper_text: "Attention..."
+    helper_text_mode: "on_error"
+    icon_right: 'currency-usd'
+    icon_right_color: app.theme_cls.primary_color
 
 <InfosLabel@MDLabel>:
     text: str()
@@ -33,7 +42,7 @@
     hint_text: "Identifiant..."
     multiline: False
     size_hint: (0.75, 0.8)
-    font_size: self.height-19
+    font_size: '38dp'
 
 <UpdateLabel@MDLabel>:
     font_style: "H5"
@@ -45,8 +54,15 @@
 <UpdateInput@MDTextField>:
     multiline: False
     font_size: '38dp'
+    helper_text: "Attention..."
+    helper_text_mode: "on_error"
 
 <UpdateGrid@MDGridLayout>:
     cols: 2
     size_hint: (1, 1)
     padding: 9
+
+<PaiementRowMonth@MDBoxLayout>:
+    orientation: "horizontal"
+    padding: '8dp'
+    spacing: '8dp'

@@ -13,16 +13,16 @@
             on_press: root.showTitle()
             on_press: sm.current = "enregistrement"
         HeaderButton:
+            text: "[b]EMPLOYEES[/b]"
+            on_press: root.hideTitle()
+            on_press: sm.current = "employees"
+            on_press: searchId.text = "tous"
+        HeaderButton:
             text: "[b]PAIEMENT[/b]"
             on_press: root.hideTitle()
             on_press: sm.current = "paiement"
             on_press: idForPaiement.text = ""
             on_press: year.text = ""
-        HeaderButton:
-            text: "[b]EMPLOYEES[/b]"
-            on_press: root.hideTitle()
-            on_press: sm.current = "employees"
-            on_press: searchId.text = "tous"
         HeaderButton:
             text: "[b]DETTE[/b]"
             on_press: root.showTitle()
@@ -38,62 +38,48 @@
             name: "enregistrement"
             MDBoxLayout:
                 orientation: "vertical"
-                padding: 19
+                padding: '19dp'
+                pos_hint: {'top': 0.9}
+                adaptive_height: True
                 InfosLabel:
                     text: "Veuillez entrer les informations neccéssaires."
-                MDGridLayout:
-                    cols: 2
-                    EnregLabel:
-                        text: "Prénom"
-                    EnregInput:
-                        id: enreg_firstName_input
-                        hint_text: "Prénom"
-                        #focus: True
-                MDBoxLayout:
-                    orientation: "vertical"
-                    InfosLabel:
-                        id: enreg_firstName_infos
-                MDGridLayout:
-                    cols: 2
-                    EnregLabel:
-                        text: "Surnom"
-                    EnregInput:
-                        id: enreg_surname_input
-                        hint_text: "Surnom"
-                MDBoxLayout:
-                    orientation: "vertical"
-                    InfosLabel:
-                        id: enreg_surname_infos
-                MDGridLayout:
-                    cols: 2
-                    EnregLabel:
-                        text: "Nom"
-                    EnregInput:
-                        id: enreg_lastName_input
-                        hint_text: "Nom"
-                        on_text_validate: root.saveRecords()
-                MDBoxLayout:
-                    orientation: "vertical"
-                    InfosLabel:
-                        id: enreg_lastName_infos
-                MDSeparator:
-                    height: 5
+                EnregInput:
+                    id: enreg_firstName_input
+                    hint_text: "Prénom"
+                    focus: True
+                EnregInput:
+                    id: enreg_surname_input
+                    hint_text: "Surnom"
+                EnregInput:
+                    id: enreg_lastName_input
+                    hint_text: "Nom"
+                    on_text_validate: root.saveRecords()
+                InfosLabel:
+                    id: enreg_lastName_infos
                 InfosLabel:
                     id: enreg_infos
                     text: "Status de l'enregistrement"
+
+            AnchorLayout:
+                anchor_x: 'center'
+                anchor_y: 'bottom'
+                padding: '19dp'
                 MDBoxLayout:
                     orientation: 'horizontal'
-                    spacing: '10dp'
-                    Button:
-                        text: "[size=19][b]Enregistrer[/b][/size]"
+                    adaptive_width: True
+                    spacing: '19dp'
+                    MDFillRoundFlatIconButton:
+                        text: "Enregistrer"
+                        icon: 'check'
+                        font_size: "24dp"
+                        md_bg_color: app.theme_cls.primary_color
                         on_release: root.saveRecords()
-                        markup: True
-                        background_color: app.theme_cls.primary_color
-                    Button:
-                        text: "[size=19][b]Annuler[/b][/size]"
+                    MDFillRoundFlatIconButton:
+                        text: "Annuler"
+                        icon: 'cancel'
+                        font_size: "24dp"
+                        md_bg_color: (1, 0, 0, 1)
                         on_release: root.cancelEnregistrement()
-                        markup: True
-                        background_color: (1, 0, 0, 1)
 
         MDScreen:
             name: "paiement"
@@ -109,119 +95,81 @@
                     InputInToolbar:
                         id: year
                         hint_text: "Annee..."
+                        theme_text_color: "Primary"
                         on_text: root.getUserInfosForPaiement(idForPaiement.text)
                     MenuButton:
                         id: addYear
                         text: str()
-                        font_size: self.height-19
+                        font_size: "24dp"
                 MDBoxLayout:
                     orientation: "horizontal"
                     InfosLabel:
-                        id: pFirstName
-                        theme_text_color: "Custom"
-                        text_color: (1, 1, 0, 1)
-                    InfosLabel:
-                        id: pSurname
-                        theme_text_color: "Custom"
-                        text_color: (1, 1, 0, 1)
-                    InfosLabel:
-                        id: pLastName
-                        theme_text_color: "Custom"
-                        text_color: (1, 1, 0, 1)
-                MDBoxLayout:
-                    orientation: "horizontal"
-                    InfosLabel:
-                        id: aaa
-                        text: "Janvier"
-                    InfosLabel:
-                        id: aaa
-                        text: "Février"
-                    InfosLabel:
-                        id: aaa
-                        text: "Mars"
-                    InfosLabel:
-                        id: aaa
-                        text: "Avril"
-                MDBoxLayout:
-                    orientation: "horizontal"
+                        id: pUserName
+                        font_style: "H4"
+                        theme_text_color: "Primary"
+                        #text_color: app.theme_cls.primary_color
+
+                PaiementRowMonth:
                     PaiementInput:
                         id: janvier
+                        hint_text: "Janvier"
                         on_text: root.updatePaiement(idForPaiement.text, year.text, "JANVIER", self.text)
                         on_text: root.updateSomme(idForPaiement.text)
                     PaiementInput:
                         id: fevrier
+                        hint_text: "Février"
                         on_text: root.updatePaiement(idForPaiement.text, year.text, "FEVRIER", self.text)
                         on_text: root.updateSomme(idForPaiement.text)
                     PaiementInput:
                         id: mars
+                        hint_text: "Mars"
                         on_text: root.updatePaiement(idForPaiement.text, year.text, "MARS", self.text)
                         on_text: root.updateSomme(idForPaiement.text)
                     PaiementInput:
                         id: avril
+                        hint_text: "Avril"
                         on_text: root.updatePaiement(idForPaiement.text, year.text, "AVRIL", self.text)
                         on_text: root.updateSomme(idForPaiement.text)
-                MDBoxLayout:
-                    orientation: "horizontal"
-                    InfosLabel:
-                        id: aaa
-                        text: "Mai"
-                    InfosLabel:
-                        id: aaa
-                        text: "Juin"
-                    InfosLabel:
-                        id: aaa
-                        text: "Juillet"
-                    InfosLabel:
-                        id: aaa
-                        text: "Aout"
-                MDBoxLayout:
-                    orientation: "horizontal"
+                PaiementRowMonth:
                     PaiementInput:
                         id: mai
+                        hint_text: "Mai"
                         on_text: root.updatePaiement(idForPaiement.text, year.text, "MAI", self.text)
                         on_text: root.updateSomme(idForPaiement.text)
                     PaiementInput:
                         id: juin
+                        hint_text: "Juin"
                         on_text: root.updatePaiement(idForPaiement.text, year.text, "JUIN", self.text)
                         on_text: root.updateSomme(idForPaiement.text)
                     PaiementInput:
                         id: juillet
+                        hint_text: "Juillet"
                         on_text: root.updatePaiement(idForPaiement.text, year.text, "JUILLET", self.text)
                         on_text: root.updateSomme(idForPaiement.text)
                     PaiementInput:
                         id: aout
+                        hint_text: "Aout"
                         on_text: root.updatePaiement(idForPaiement.text, year.text, "AOUT", self.text)
                         on_text: root.updateSomme(idForPaiement.text)
-                MDBoxLayout:
-                    orientation: "horizontal"
-                    InfosLabel:
-                        id: aaa
-                        text: "Septembre"
-                    InfosLabel:
-                        id: aaa
-                        text: "Octobre"
-                    InfosLabel:
-                        id: aaa
-                        text: "Novembre"
-                    InfosLabel:
-                        id: aaa
-                        text: "Décembre"
-                MDBoxLayout:
-                    orientation: "horizontal"
+                PaiementRowMonth:
                     PaiementInput:
                         id: septembre
+                        hint_text: "Septembre"
                         on_text: root.updatePaiement(idForPaiement.text, year.text, "SEPTEMBRE", self.text)
                         on_text: root.updateSomme(idForPaiement.text)
                     PaiementInput:
                         id: octobre
+                        hint_text: "Octobre"
                         on_text: root.updatePaiement(idForPaiement.text, year.text, "OCTOBRE", self.text)
                         on_text: root.updateSomme(idForPaiement.text)
                     PaiementInput:
                         id: novembre
+                        hint_text: "Novembre"
                         on_text: root.updatePaiement(idForPaiement.text, year.text, "NOVEMBRE", self.text)
                         on_text: root.updateSomme(idForPaiement.text)
                     PaiementInput:
                         id: decembre
+                        hint_text: "Décembre"
                         on_text: root.updatePaiement(idForPaiement.text, year.text, "DECEMBRE", self.text)
                         on_text: root.updateSomme(idForPaiement.text)
                 MDBoxLayout:
@@ -292,44 +240,44 @@
                         id: idForDette
                         on_text: root.getUserInfosForDette(self.text)
                 MDBoxLayout:
-                    orientation: "horizontal"
+                    orientation: "vertical"
+                    padding: '24dp'
+                    adaptive_height: True
+                    pos_hint: {'top': 0.5}
                     InfosLabel:
-                        id: dFirstName
-                        theme_text_color: "Custom"
-                        font_size: 24
-                        text_color: (1, 1, 0, 1)
+                        id: dUserName
+                        theme_text_color: "Primary"
+                        font_style: "H4"
+                    UpdateInput:
+                        id: detteMontant
+                        hint_text: "Montant"
+                        required: True
+                        max_text_length: 6
+                        icon_right: 'currency-usd'
+                        icon_right_color: app.theme_cls.primary_color
                     InfosLabel:
-                        id: dSurname
-                        theme_text_color: "Custom"
-                        font_size: 24
-                        text_color: (1, 1, 0, 1)
-                    InfosLabel:
-                        id: dLastName
-                        theme_text_color: "Custom"
-                        font_size: 24
-                        text_color: (1, 1, 0, 1)
-                UpdateInput:
-                    id: detteMontant
-                    hint_text: "Montant"
-                    size_hint: (0.75, 0.5)
-                    pos_hint: {"center_x": 0.5, "center_y": 0.5}
-                InfosLabel:
-                    id: detteInfos
-                    markup: True
-                MDBoxLayout:
-                    orientation: "horizontal"
-                    padding: 24
-                    spacing: '10dp'
-                    Button:
-                        text: "Accorder"
-                        font_size: "24dp"
-                        background_color: app.theme_cls.primary_color
-                        on_press: root.setDette(idForDette.text)
-                    Button:
-                        text: "Annuler"
-                        font_size: "24dp"
-                        background_color: (1, 0, 0, 1)
-                        on_press: root.clearDette()
+                        id: detteInfos
+                        markup: True
+                AnchorLayout:
+                    anchor_x: 'center'
+                    anchor_y: 'bottom'
+                    padding: '19dp'
+                    MDBoxLayout:
+                        orientation: 'horizontal'
+                        adaptive_width: True
+                        spacing: '19dp'
+                        MDFillRoundFlatIconButton:
+                            text: "Accorder"
+                            icon: 'check'
+                            font_size: "24dp"
+                            md_bg_color: app.theme_cls.primary_color
+                            on_press: root.setDette(idForDette.text)
+                        MDFillRoundFlatIconButton:
+                            text: "Annuler"
+                            icon: 'cancel'
+                            font_size: "24dp"
+                            md_bg_color: (1, 0, 0, 1)
+                            on_press: root.clearDette()
 
         MDScreen:
             name: "mise_en_jour"
@@ -348,6 +296,7 @@
                     UpdateInput:
                         id: updatePrenom
                         hint_text: "Prénom"
+                        max_text_length: 13
                     UpdateInput:
                         id: UpdateDateSortir
                         hint_text: "Date de sortir"
@@ -355,27 +304,33 @@
                     UpdateInput:
                         id: updateSurnom
                         hint_text: "Surnom"
+                        max_text_length: 13
                     UpdateInput:
                         id: updatePrenomTuteur
                         hint_text: "Prénom du tuteur"
+                        max_text_length: 13
                 UpdateGrid:
                     UpdateInput:
                         id: updateNom
                         hint_text: "Nom"
+                        max_text_length: 13
                     UpdateInput:
                         id: updateNomTutuer
                         hint_text: "Nom du tuteur"
+                        max_text_length: 13
                 UpdateGrid:
                     UpdateInput:
                         id: updateSalaire
                         hint_text: "Salaire"
                         icon_right: 'currency-eur'
                         icon_right_color: app.theme_cls.primary_color
+                        max_text_length: 6
                     UpdateInput:
                         id: updateTuteurContact
                         hint_text: "Contact du tuteur"
                         icon_right: 'phone'
                         icon_right_color: app.theme_cls.primary_color
+                        max_text_length: 13
                 UpdateGrid:
                     UpdateInput:
                         id: updateDateEntrer
@@ -388,6 +343,7 @@
                         hint_text: "Adresse du tuteur"
                         icon_right: 'google-maps'
                         icon_right_color: app.theme_cls.primary_color
+                        max_text_length: 13
                 MDBoxLayout:
                     orientation: "vertical"
                     InfosLabel:

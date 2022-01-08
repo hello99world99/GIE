@@ -40,20 +40,17 @@ class Body(MDBoxLayout):
         prenomValue = self.ids["enreg_firstName_input"].text.capitalize()
         surnomValue = self.ids["enreg_surname_input"].text.capitalize()
         nomValue = self.ids["enreg_lastName_input"].text.capitalize()
+
         if prenomValue=="" or len(prenomValue)<2:
-            self.ids["enreg_firstName_infos"].text = "[color=#ffff00]Le champ prénom est obligatoire...[/color]"
-            Clock.schedule_once(self.hideFirstNameInfos, 3)
+            print("[color=#ffff00]Le champ prénom est obligatoire...[/color]")
         elif prenomValue.isalpha()==False:
-            self.ids["enreg_firstName_infos"].text = "[color=#ffff00]Le prenom ne devrait contenir que des alphabets.[/color]"
-            Clock.schedule_once(self.hideFirstNameInfos, 3)
+            print("[color=#ffff00]Le prenom ne devrait contenir que des alphabets.[/color]")
         elif nomValue=="" or len(nomValue)<2:
-            self.ids["enreg_lastName_infos"].text = "[color=#ffff00]Le champ nom est obligatoire...[/color]"
-            Clock.schedule_once(self.hideLastNameInfo, 3)
+            print("[color=#ffff00]Le champ nom est obligatoire...[/color]")
         elif nomValue.isalpha()==False:
-            self.ids["enreg_lastName_infos"].text = "[color=#ffff00]Le nom ne devrait contenir que des alphabets.[/color]"
-            Clock.schedule_once(self.hideLastNameInfo, 3)
+            print("[color=#ffff00]Le nom ne devrait contenir que des alphabets.[/color]")
         elif backend.DataBase.isSaved(prenomValue, surnomValue, nomValue)==True:
-            self.ids["enreg_infos"].text = "[color=#ffff00]Ce nom existe déjà dans la base de donnée...[/color]"
+            """[color=#ffff00]Ce nom existe déjà dans la base de donnée...[/color]"""
             Clock.schedule_once(self.hideInfo, 3)
         else:
             backend.DataBase.inscription(prenomValue, surnomValue, nomValue)
@@ -94,17 +91,13 @@ class Body(MDBoxLayout):
         userID = ID
         to_be_used = list() #Used to keep the different month value for a while
         if (userID==""):
-            self.ids["pFirstName"].text = ""
-            self.ids["pSurname"].text = ""
-            self.ids["pLastName"].text = ""
+            self.ids["pUserName"].text = ""
             self.hideButton()
             self.clearPaiement()
         else:
             userID = backend.DataBase.getEmployeeByID(ID)
             if (userID!=[]):
-                self.ids["pFirstName"].text = f"[b]{userID[0][0]}[/b]"
-                self.ids["pSurname"].text = f"[b]{userID[0][1]}[/b]"
-                self.ids["pLastName"].text = f"[b]{userID[0][2]}[/b]"
+                self.ids["pUserName"].text = f"[b]{userID[0][0]} {userID[0][1]} {userID[0][2]}[/b]"
                 if (len(str(self.ids["year"].text))==4):
                     ID = self.ids["idForPaiement"].text
                     year = self.ids["year"].text
@@ -124,9 +117,7 @@ class Body(MDBoxLayout):
                     for i in range(len(Body.MONTH)):
                             self.ids[Body.MONTH[i]].text = ""
             else:
-                self.ids["pFirstName"].text = ""
-                self.ids["pSurname"].text = ""
-                self.ids["pLastName"].text = ""
+                self.ids["pUserName"].text = ""
                 self.hideButton()
 
     def updatePaiement(self, ID, year, mois, salaire):
@@ -312,13 +303,9 @@ class Body(MDBoxLayout):
         else:
             userID = backend.DataBase.getEmployeeByID(ID)
             if (userID!=[]):
-                self.ids["dFirstName"].text = f"[b]{userID[0][0]}[/b]"
-                self.ids["dSurname"].text = f"[b]{userID[0][1]}[/b]"
-                self.ids["dLastName"].text = f"[b]{userID[0][2]}[/b]"
+                self.ids["dUserName"].text = f"[b]{userID[0][0]} {userID[0][1]} {userID[0][2]}[/b]"
             else:
-                self.ids["dFirstName"].text = ""
-                self.ids["dSurname"].text = ""
-                self.ids["dLastName"].text = ""
+                self.ids["dUserName"].text = ""
                 self.ids["detteMontant"].text = ""
 
     def setDette(self, ID):
@@ -367,9 +354,7 @@ class Body(MDBoxLayout):
 
     def clearDette(self):
         self.ids["idForDette"].text = ""
-        self.ids["dFirstName"].text = ""
-        self.ids["dSurname"].text = ""
-        self.ids["dLastName"].text = ""
+        self.ids["dUserName"].text = ""
         self.ids["detteMontant"].text = ""
     
     def hideDetteInfos(self, instence):
@@ -476,9 +461,6 @@ class Body(MDBoxLayout):
 
 class Icontent(MDBoxLayout):
     pass
-
-class PageSwiperIndex(MDSwiperItem):
-        pass
 
 class Main(MDApp):
 
