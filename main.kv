@@ -258,20 +258,23 @@
                     orientation: "horizontal"
                     size_hint: (1, 0.1)
                     spacing: '10dp'
-                    Button:
+                    MDIconButton:
                         id: prv
-                        text: "[b]Précedant[/b]"
-                        font_size: "19dp"
-                        background_color: app.theme_cls.primary_color
+                        icon: "arrow-left"
                         on_press: root.preview()
-                        markup: True
-                    Button:
+                        md_bg_color: app.theme_cls.primary_color
+
+                    MDBoxLayout:
+                        orientation: 'horizontal'
+                        MDSwiper:
+                            id: page_range
+                            #on_swipe: self.get_current_item().ids.icon.shake()
+
+                    MDIconButton:
                         id: svt
-                        text: "[b]Suivant[b]"
-                        font_size: "19dp"
-                        background_color: app.theme_cls.primary_color
+                        icon: "arrow-right"
                         on_press: root.next()
-                        markup: True
+                        md_bg_color: app.theme_cls.primary_color
 
         MDScreen:
             name: "dette"

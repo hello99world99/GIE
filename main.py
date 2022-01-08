@@ -1,13 +1,15 @@
-import datetime
 import time
+from math import floor, ceil
+
 from kivymd.app import MDApp
 from kivymd.uix.boxlayout import MDBoxLayout
-from kivymd.uix.label import MDLabel
-from kivymd.uix.button import MDFlatButton
 from kivy.animation import Animation
-from kivymd.uix.expansionpanel import MDExpansionPanel, MDExpansionPanelThreeLine
+from kivymd.uix.button import MDRoundFlatButton
 from kivymd.uix.picker import MDDatePicker
+from kivy.properties import ObjectProperty
 from kivy.clock import Clock
+from kivymd.uix.swiper import MDSwiperItem
+
 import backend
 
 class Body(MDBoxLayout):
@@ -269,6 +271,9 @@ class Body(MDBoxLayout):
                 except (IndexError, ValueError):
                     pass
 
+                for i in range(round(self.limit/4)):
+                    self.ids['page_range'].add_widget(MDSwiperItem)
+
     def getUserDateIn(self, ID):
         userID = backend.DataBase.getEmployeeByID(ID)
         return userID
@@ -420,7 +425,7 @@ class Body(MDBoxLayout):
         '''Events called when the "CANCEL" dialog box button is clicked.'''
 
     def show_date_picker(self):
-        date_dialog = MDDatePicker() #max_date=datetime.datetime.now()
+        date_dialog = MDDatePicker() # max_date=datetime.datetime.now(); primary_color=app.theme_cls.primary_color
         date_dialog.bind(on_save=self.on_save, on_cancel=self.on_cancel)
         date_dialog.open()
 
@@ -465,6 +470,9 @@ class Body(MDBoxLayout):
 
 class Icontent(MDBoxLayout):
     pass
+
+class PageSwiperIndex(MDSwiperItem):
+        pass
 
 class Main(MDApp):
     title = "GIE"
