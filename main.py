@@ -1,12 +1,12 @@
 import time
 
-from kivy.properties import ObjectProperty
 from kivymd.app import MDApp
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivy.animation import Animation
 from kivymd.uix.button import MDRoundFlatButton
 from kivymd.uix.picker import MDDatePicker
 from kivy.clock import Clock
+from kivy.properties import ObjectProperty
 
 import backend
 
