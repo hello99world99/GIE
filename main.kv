@@ -4,6 +4,9 @@
 
 <Body>:
     orientation: "vertical"
+    prenom: enreg_firstName_input
+    surnom: enreg_surname_input
+    nom: enreg_lastName_input
     MDToolbar:
         id: title
         title: "Groupement d'Interet Economique (GIE) Djiguiya".upper()
@@ -46,14 +49,17 @@
                 EnregInput:
                     id: enreg_firstName_input
                     hint_text: "Prénom"
-                    focus: True
+                    required: True
+                    on_text: root.check_enreg_error()
                 EnregInput:
                     id: enreg_surname_input
                     hint_text: "Surnom"
+                    on_text: root.check_enreg_error()
                 EnregInput:
                     id: enreg_lastName_input
                     hint_text: "Nom"
-                    on_text_validate: root.saveRecords()
+                    required: True
+                    on_text: root.check_enreg_error()
                 InfosLabel:
                     id: enreg_lastName_infos
                 InfosLabel:
@@ -75,7 +81,7 @@
                         md_bg_color: app.theme_cls.primary_color
                         on_release: root.saveRecords()
                     MDFillRoundFlatIconButton:
-                        text: "Annuler"
+                        text: 'Annuler'
                         icon: 'cancel'
                         font_size: "24dp"
                         md_bg_color: (1, 0, 0, 1)
@@ -290,9 +296,6 @@
                         id: idToUpdate
                         on_text: root.getUserInfosForUpdate(self.text)
                 UpdateGrid:
-                    cols: 2
-                    adaptive_height: True
-                    size_hint: (1, 1)
                     UpdateInput:
                         id: updatePrenom
                         hint_text: "Prénom"
@@ -348,23 +351,24 @@
                     orientation: "vertical"
                     InfosLabel:
                         id: updateInfos
-                        size_hint: (1, None)
-                        height: 0
-                        padding: (0, 0)
+
+                AnchorLayout:
+                    anchor_x: 'center'
+                    anchor_y: 'bottom'
+                    padding: '19dp'
                     MDBoxLayout:
                         orientation: 'horizontal'
-                        size_hint: (1, 0.1)
-                        padding: 9
-                        spacing: '10dp'
-                        Button:
-                            text: "[b]Mettre à jour[/b]"
-                            font_size: "19dp"
-                            background_color: app.theme_cls.primary_color
-                            on_press: root.setUpdate(idToUpdate.text)
-                            markup: True
-                        Button:
-                            text: "[b]Annuler[/b]"
-                            background_color: (1, 0, 0, 1)
-                            font_size: "19dp"
-                            on_press: root.clearUpdateID()
-                            markup: True
+                        adaptive_width: True
+                        spacing: '19dp'
+                        MDFillRoundFlatIconButton:
+                            text: "Mettre à jour"
+                            icon: 'check'
+                            font_size: "24dp"
+                            md_bg_color: app.theme_cls.primary_color
+                            on_release: root.setUpdate(idToUpdate.text)
+                        MDFillRoundFlatIconButton:
+                            text: "Annuler"
+                            icon: 'cancel'
+                            font_size: "24dp"
+                            md_bg_color: (1, 0, 0, 1)
+                            on_release: root.clearUpdateID()

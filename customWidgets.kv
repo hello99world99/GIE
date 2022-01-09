@@ -18,7 +18,7 @@
     max_text_length: 13
     font_size: '38dp'
     halign: "left"
-    helper_text: "Attention..."
+    helper_text: "Attention, verifiez la saisie..."
     helper_text_mode: "on_error"
 
 <PaiementInput@MDTextField>:
@@ -28,7 +28,7 @@
     halign: "right"
     helper_text: "Attention..."
     helper_text_mode: "on_error"
-    icon_right: 'currency-usd'
+    icon_right: 'currency-eur'
     icon_right_color: app.theme_cls.primary_color
 
 <InfosLabel@MDLabel>:
@@ -59,8 +59,8 @@
 
 <UpdateGrid@MDGridLayout>:
     cols: 2
-    size_hint: (1, 1)
-    padding: 9
+    padding: '10dp'
+    spacing: '9dp'
 
 <PaiementRowMonth@MDBoxLayout>:
     orientation: "horizontal"
