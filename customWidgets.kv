@@ -1,0 +1,68 @@
+<HeaderButton@ToggleButton>:
+    group: "menu"
+    background_color: app.theme_cls.primary_color
+    markup: True
+
+<MenuButton@MDFlatButton>:
+    theme_text_color: "Custom"
+    text_color: (1, 1, 1, 1)
+    markup: True
+
+<EnregLabel@MDLabel>:
+    font_style: "H5"
+    theme_text_color: "Primary"
+    size_hint_x: None
+
+<EnregInput@MDTextField>:
+    multiline: False
+    max_text_length: 13
+    font_size: '38dp'
+    halign: "left"
+    helper_text: "Attention, verifiez la saisie..."
+    helper_text_mode: "on_error"
+
+<PaiementInput@MDTextField>:
+    multiline: False
+    max_text_length: 6
+    font_size: '38dp'
+    halign: "right"
+    helper_text: "Attention..."
+    helper_text_mode: "on_error"
+    icon_right: 'currency-eur'
+    icon_right_color: app.theme_cls.primary_color
+
+<InfosLabel@MDLabel>:
+    text: str()
+    halign: "center"
+    font_style: "H5"
+    theme_text_color: "Primary"
+    markup: True
+
+<InputInToolbar@MDTextFieldRect>:
+    hint_text: "Identifiant..."
+    multiline: False
+    size_hint: (0.75, 0.8)
+    font_size: '38dp'
+
+<UpdateLabel@MDLabel>:
+    font_style: "H5"
+    theme_text_color: "Primary"
+    size_hint: (0.5, 1)
+    pos_hint: {"center_x": 0.5, "center_y": 0.5}
+    spacing: 9
+
+<UpdateInput@MDTextField>:
+    multiline: False
+    font_size: '38dp'
+    helper_text: "Attention..."
+    helper_text_mode: "on_error"
+
+<UpdateGrid@MDGridLayout>:
+    cols: 2
+    padding: '10dp'
+    spacing: '9dp'
+
+<PaiementRowMonth@MDBoxLayout>:
+    orientation: "horizontal"
+    padding: '8dp'
+    spacing: '8dp'

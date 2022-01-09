@@ -1,7 +1,13 @@
 #:kivy 2.0.0
+#:include components.kv
+##:kivymd 0.104.2
 
 <Body>:
     orientation: "vertical"
+    prenom: enreg_firstName_input
+    surnom: enreg_surname_input
+    nom: enreg_lastName_input
+    montantDette: detteMontant
     MDToolbar:
         id: title
         title: "Groupement d'Interet Economique (GIE) Djiguiya".upper()
@@ -11,16 +17,16 @@
             on_press: root.showTitle()
             on_press: sm.current = "enregistrement"
         HeaderButton:
+            text: "[b]EMPLOYEES[/b]"
+            on_press: root.hideTitle()
+            on_press: sm.current = "employees"
+            on_press: searchId.text = "tous"
+        HeaderButton:
             text: "[b]PAIEMENT[/b]"
             on_press: root.hideTitle()
             on_press: sm.current = "paiement"
             on_press: idForPaiement.text = ""
             on_press: year.text = ""
-        HeaderButton:
-            text: "[b]EMPLOYEES[/b]"
-            on_press: root.showTitle()
-            on_press: sm.current = "employees"
-            on_press: searchId.text = "Filtre"
         HeaderButton:
             text: "[b]DETTE[/b]"
             on_press: root.showTitle()
@@ -36,59 +42,49 @@
             name: "enregistrement"
             MDBoxLayout:
                 orientation: "vertical"
-                padding: 19
+                padding: '19dp'
+                pos_hint: {'top': 0.9}
+                adaptive_height: True
                 InfosLabel:
                     text: "Veuillez entrer les informations neccéssaires."
-                MDGridLayout:
-                    cols: 2
-                    EnregLabel:
-                        text: "Prénom"
-                    EnregInput:
-                        id: enreg_firstName_input
-                        hint_text: "Prénom"
-                        focus: True
-                MDBoxLayout:
-                    orientation: "vertical"
-                    InfosLabel:
-                        id: enreg_firstName_infos
-                MDGridLayout:
-                    cols: 2
-                    EnregLabel:
-                        text: "Surnom"
-                    EnregInput:
-                        id: enreg_surname_input
-                        hint_text: "Surnom"
-                MDBoxLayout:
-                    orientation: "vertical"
-                    InfosLabel:
-                        id: enreg_surname_infos
-                MDGridLayout:
-                    cols: 2
-                    EnregLabel:
-                        text: "Nom"
-                    EnregInput:
-                        id: enreg_lastName_input
-                        hint_text: "Nom"
-                        on_text_validate: root.saveRecords()
-                MDBoxLayout:
-                    orientation: "vertical"
-                    InfosLabel:
-                        id: enreg_lastName_infos
-                MDSeparator:
-                    height: 5
+                EnregInput:
+                    id: enreg_firstName_input
+                    hint_text: "Prénom"
+                    required: True
+                    on_text: root.check_enreg_error()
+                EnregInput:
+                    id: enreg_surname_input
+                    hint_text: "Surnom"
+                    on_text: root.check_enreg_error()
+                EnregInput:
+                    id: enreg_lastName_input
+                    hint_text: "Nom"
+                    required: True
+                    on_text: root.check_enreg_error()
+                InfosLabel:
+                    id: enreg_lastName_infos
                 InfosLabel:
                     id: enreg_infos
                     text: "Status de l'enregistrement"
-                MDGridLayout:
-                    cols: 2
-                    MenuButton:
-                        text: "[color=#000000][size=19][b]Enregistrer[/b][/size][/color]"
-                        md_bg_color: (0, 1, 0, 1)
-                        theme_text_color: "Custom"
-                        text_color: (0, 0, 0, 1)
+
+            AnchorLayout:
+                anchor_x: 'center'
+                anchor_y: 'bottom'
+                padding: '19dp'
+                MDBoxLayout:
+                    orientation: 'horizontal'
+                    adaptive_width: True
+                    spacing: '19dp'
+                    MDFillRoundFlatIconButton:
+                        text: "Enregistrer"
+                        icon: 'check'
+                        font_size: "24dp"
+                        md_bg_color: app.theme_cls.primary_color
                         on_release: root.saveRecords()
-                    MenuButton:
-                        text: "[color=#000000][size=19][b]Annuler[/b][/size][/color]"
+                    MDFillRoundFlatIconButton:
+                        text: 'Annuler'
+                        icon: 'cancel'
+                        font_size: "24dp"
                         md_bg_color: (1, 0, 0, 1)
                         on_release: root.cancelEnregistrement()
 
@@ -106,120 +102,81 @@
                     InputInToolbar:
                         id: year
                         hint_text: "Annee..."
+                        theme_text_color: "Primary"
                         on_text: root.getUserInfosForPaiement(idForPaiement.text)
                     MenuButton:
                         id: addYear
                         text: str()
-                        size_hint: (0, 0)
-                        font_size: self.height-19
+                        font_size: "24dp"
                 MDBoxLayout:
                     orientation: "horizontal"
                     InfosLabel:
-                        id: pFirstName
-                        theme_text_color: "Custom"
-                        text_color: (1, 1, 0, 1)
-                    InfosLabel:
-                        id: pSurname
-                        theme_text_color: "Custom"
-                        text_color: (1, 1, 0, 1)
-                    InfosLabel:
-                        id: pLastName
-                        theme_text_color: "Custom"
-                        text_color: (1, 1, 0, 1)
-                MDBoxLayout:
-                    orientation: "horizontal"
-                    InfosLabel:
-                        id: aaa
-                        text: "Janvier"
-                    InfosLabel:
-                        id: aaa
-                        text: "Février"
-                    InfosLabel:
-                        id: aaa
-                        text: "Mars"
-                    InfosLabel:
-                        id: aaa
-                        text: "Avril"
-                MDBoxLayout:
-                    orientation: "horizontal"
+                        id: pUserName
+                        font_style: "H4"
+                        theme_text_color: "Primary"
+                        #text_color: app.theme_cls.primary_color
+
+                PaiementRowMonth:
                     PaiementInput:
                         id: janvier
+                        hint_text: "Janvier"
                         on_text: root.updatePaiement(idForPaiement.text, year.text, "JANVIER", self.text)
                         on_text: root.updateSomme(idForPaiement.text)
                     PaiementInput:
                         id: fevrier
+                        hint_text: "Février"
                         on_text: root.updatePaiement(idForPaiement.text, year.text, "FEVRIER", self.text)
                         on_text: root.updateSomme(idForPaiement.text)
                     PaiementInput:
                         id: mars
+                        hint_text: "Mars"
                         on_text: root.updatePaiement(idForPaiement.text, year.text, "MARS", self.text)
                         on_text: root.updateSomme(idForPaiement.text)
                     PaiementInput:
                         id: avril
+                        hint_text: "Avril"
                         on_text: root.updatePaiement(idForPaiement.text, year.text, "AVRIL", self.text)
                         on_text: root.updateSomme(idForPaiement.text)
-                MDBoxLayout:
-                    orientation: "horizontal"
-                    InfosLabel:
-                        id: aaa
-                        text: "Mai"
-                    InfosLabel:
-                        id: aaa
-                        text: "Juin"
-                    InfosLabel:
-                        id: aaa
-                        text: "Juillet"
-                    InfosLabel:
-                        id: aaa
-                        text: "Aout"
-                MDBoxLayout:
-                    orientation: "horizontal"
+                PaiementRowMonth:
                     PaiementInput:
                         id: mai
+                        hint_text: "Mai"
                         on_text: root.updatePaiement(idForPaiement.text, year.text, "MAI", self.text)
                         on_text: root.updateSomme(idForPaiement.text)
                     PaiementInput:
                         id: juin
+                        hint_text: "Juin"
                         on_text: root.updatePaiement(idForPaiement.text, year.text, "JUIN", self.text)
                         on_text: root.updateSomme(idForPaiement.text)
                     PaiementInput:
                         id: juillet
+                        hint_text: "Juillet"
                         on_text: root.updatePaiement(idForPaiement.text, year.text, "JUILLET", self.text)
                         on_text: root.updateSomme(idForPaiement.text)
                     PaiementInput:
                         id: aout
+                        hint_text: "Aout"
                         on_text: root.updatePaiement(idForPaiement.text, year.text, "AOUT", self.text)
                         on_text: root.updateSomme(idForPaiement.text)
-                MDBoxLayout:
-                    orientation: "horizontal"
-                    InfosLabel:
-                        id: aaa
-                        text: "Septembre"
-                    InfosLabel:
-                        id: aaa
-                        text: "Octobre"
-                    InfosLabel:
-                        id: aaa
-                        text: "Novembre"
-                    InfosLabel:
-                        id: aaa
-                        text: "Décembre"
-                MDBoxLayout:
-                    orientation: "horizontal"
+                PaiementRowMonth:
                     PaiementInput:
                         id: septembre
+                        hint_text: "Septembre"
                         on_text: root.updatePaiement(idForPaiement.text, year.text, "SEPTEMBRE", self.text)
                         on_text: root.updateSomme(idForPaiement.text)
                     PaiementInput:
                         id: octobre
+                        hint_text: "Octobre"
                         on_text: root.updatePaiement(idForPaiement.text, year.text, "OCTOBRE", self.text)
                         on_text: root.updateSomme(idForPaiement.text)
                     PaiementInput:
                         id: novembre
+                        hint_text: "Novembre"
                         on_text: root.updatePaiement(idForPaiement.text, year.text, "NOVEMBRE", self.text)
                         on_text: root.updateSomme(idForPaiement.text)
                     PaiementInput:
                         id: decembre
+                        hint_text: "Décembre"
                         on_text: root.updatePaiement(idForPaiement.text, year.text, "DECEMBRE", self.text)
                         on_text: root.updateSomme(idForPaiement.text)
                 MDBoxLayout:
@@ -242,7 +199,6 @@
                         text: "Filtre"
                         hint_text: "Entrer un nom..."
                         font_size: self.height-19
-                        on_text: root.hideTitle()
                         on_text: root.showEmployeesList(self.text)
                         markup: True
                 UpdateGrid:
@@ -257,20 +213,30 @@
                 MDBoxLayout:
                     orientation: "horizontal"
                     size_hint: (1, 0.1)
-                    MenuButton:
+                    spacing: '10dp'
+                    MDIconButton:
                         id: prv
-                        text: "[size=24][b]Précedant[/b][/size]"
-                        md_bg_color: (0, 1, 0, 1)
-                        theme_text_color: "Custom"
-                        text_color: (0, 0, 0, 1)
+                        icon: "arrow-left"
                         on_press: root.preview()
-                    MenuButton:
+                        md_bg_color: app.theme_cls.primary_color
+
+                    MDBoxLayout:
+                        orientation: 'horizontal'
+                        ScrollView:
+                            do_scroll_x: True
+                            do_scroll_y: False
+                            adaptive_width: True
+                            MDBoxLayout:
+                                id: page_range
+                                orientation: "horizontal"
+                                adaptive_width: True
+
+                    MDIconButton:
                         id: svt
-                        text: "[size=24][b]Suivant[b][/size]"
-                        md_bg_color: (0, 1, 0, 1)
-                        theme_text_color: "Custom"
-                        text_color: (0, 0, 0, 1)
+                        icon: "arrow-right"
                         on_press: root.next()
+                        md_bg_color: app.theme_cls.primary_color
+
         MDScreen:
             name: "dette"
             MDBoxLayout:
@@ -281,45 +247,44 @@
                         id: idForDette
                         on_text: root.getUserInfosForDette(self.text)
                 MDBoxLayout:
-                    orientation: "horizontal"
+                    orientation: "vertical"
+                    padding: '24dp'
+                    adaptive_height: True
+                    pos_hint: {'top': 0.5}
                     InfosLabel:
-                        id: dFirstName
-                        theme_text_color: "Custom"
-                        font_size: 24
-                        text_color: (1, 1, 0, 1)
+                        id: dUserName
+                        theme_text_color: "Primary"
+                        font_style: "H4"
+                    UpdateInput:
+                        id: detteMontant
+                        hint_text: "Montant"
+                        required: True
+                        max_text_length: 6
+                        icon_right: 'currency-usd'
+                        icon_right_color: app.theme_cls.primary_color
                     InfosLabel:
-                        id: dSurname
-                        theme_text_color: "Custom"
-                        font_size: 24
-                        text_color: (1, 1, 0, 1)
-                    InfosLabel:
-                        id: dLastName
-                        theme_text_color: "Custom"
-                        font_size: 24
-                        text_color: (1, 1, 0, 1)
-                UpdateInput:
-                    id: detteMontant
-                    hint_text: "Montant"
-                    size_hint: (0.75, 0.5)
-                    pos_hint: {"center_x": 0.5, "center_y": 0.5}
-                InfosLabel:
-                    id: detteInfos
-                    markup: True
-                MDBoxLayout:
-                    orientation: "horizontal"
-                    padding: 9
-                    MenuButton:
-                        text: "[color=#000000][size=19][b]Accorder[/size][/b][/color]"
-                        size_hint: (0.75, 0.5)
-                        pos_hint: {"center_x": 0.5,}
-                        md_bg_color: (0, 1, 0, 1)
-                        on_press: root.setDette(idForDette.text)
-                    MenuButton:
-                        text: "[color=#000000][size=19][b]Annuler[/size][/b][/color]"
-                        size_hint: (0.75, 0.5)
-                        pos_hint: {"center_x": 0.5,}
-                        md_bg_color: (1, 0, 0, 1)
-                        on_press: root.clearDette()
+                        id: detteInfos
+                        markup: True
+                AnchorLayout:
+                    anchor_x: 'center'
+                    anchor_y: 'bottom'
+                    padding: '19dp'
+                    MDBoxLayout:
+                        orientation: 'horizontal'
+                        adaptive_width: True
+                        spacing: '19dp'
+                        MDFillRoundFlatIconButton:
+                            text: "Accorder"
+                            icon: 'check'
+                            font_size: "24dp"
+                            md_bg_color: app.theme_cls.primary_color
+                            on_press: root.setDette(idForDette.text)
+                        MDFillRoundFlatIconButton:
+                            text: "Annuler"
+                            icon: 'cancel'
+                            font_size: "24dp"
+                            md_bg_color: (1, 0, 0, 1)
+                            on_press: root.clearDette()
 
         MDScreen:
             name: "mise_en_jour"
@@ -332,12 +297,10 @@
                         id: idToUpdate
                         on_text: root.getUserInfosForUpdate(self.text)
                 UpdateGrid:
-                    cols: 2
-                    adaptive_height: True
-                    size_hint: (1, 1)
                     UpdateInput:
                         id: updatePrenom
                         hint_text: "Prénom"
+                        max_text_length: 13
                     UpdateInput:
                         id: UpdateDateSortir
                         hint_text: "Date de sortir"
@@ -345,157 +308,68 @@
                     UpdateInput:
                         id: updateSurnom
                         hint_text: "Surnom"
+                        max_text_length: 13
                     UpdateInput:
                         id: updatePrenomTuteur
                         hint_text: "Prénom du tuteur"
+                        max_text_length: 13
                 UpdateGrid:
                     UpdateInput:
                         id: updateNom
                         hint_text: "Nom"
+                        max_text_length: 13
                     UpdateInput:
                         id: updateNomTutuer
                         hint_text: "Nom du tuteur"
+                        max_text_length: 13
                 UpdateGrid:
                     UpdateInput:
                         id: updateSalaire
                         hint_text: "Salaire"
+                        icon_right: 'currency-eur'
+                        icon_right_color: app.theme_cls.primary_color
+                        max_text_length: 6
                     UpdateInput:
                         id: updateTuteurContact
                         hint_text: "Contact du tuteur"
+                        icon_right: 'phone'
+                        icon_right_color: app.theme_cls.primary_color
+                        max_text_length: 13
                 UpdateGrid:
                     UpdateInput:
                         id: updateDateEntrer
                         hint_text: "Date d'entrer"
+                        icon_right: 'calendar'
+                        icon_right_color: app.theme_cls.primary_color
+                        on_focus: root.show_date_picker()
                     UpdateInput:
                         id: updateAdressTuteur
                         hint_text: "Adresse du tuteur"
+                        icon_right: 'google-maps'
+                        icon_right_color: app.theme_cls.primary_color
+                        max_text_length: 13
                 MDBoxLayout:
                     orientation: "vertical"
                     InfosLabel:
                         id: updateInfos
-                        size_hint: (1, None)
-                        height: 0
-                        padding: (0, 0)
+
+                AnchorLayout:
+                    anchor_x: 'center'
+                    anchor_y: 'bottom'
+                    padding: '19dp'
                     MDBoxLayout:
-                        cols: 2
-                        MenuButton:
-                            text: "[color=#000000][size=19][b]Mettre à jour[/size][/b][/color]"
-                            size_hint: (0.5, 0.5)
-                            md_bg_color: (0, 1, 0, 1)
-                            on_press: root.setUpdate(idToUpdate.text)
-                        MenuButton:
-                            text: "[color=#000000][size=19][b]Annuler[/size][/b][/color]"
+                        orientation: 'horizontal'
+                        adaptive_width: True
+                        spacing: '19dp'
+                        MDFillRoundFlatIconButton:
+                            text: "Mettre à jour"
+                            icon: 'check'
+                            font_size: "24dp"
+                            md_bg_color: app.theme_cls.primary_color
+                            on_release: root.setUpdate(idToUpdate.text)
+                        MDFillRoundFlatIconButton:
+                            text: "Annuler"
+                            icon: 'cancel'
+                            font_size: "24dp"
                             md_bg_color: (1, 0, 0, 1)
-                            size_hint: (0.5, 0.5)
-                            on_press: root.clearUpdateID()
-
-<HeaderButton@ToggleButton>:
-    group: "menu"
-    background_color: "#00ff00"
-    markup: True
-
-<MenuButton@MDFlatButton>:
-    size_hint: (1, 1)
-    theme_text_color: "Custom"
-    text_color: (1, 1, 1, 1)
-    markup: True
-
-<EnregLabel@MDLabel>:
-    font_style: "H5"
-    theme_text_color: "Primary"
-    size_hint_x: None
-
-<EnregInput@MDTextFieldRect>:
-    multiline: False
-    font_size: self.height-19
-
-<PaiementInput@MDTextFieldRect>:
-    multiline: False
-    font_size: self.height-19
-    halign: "center"
-
-<InfosLabel@MDLabel>:
-    text: str()
-    halign: "center"
-    font_style: "H5"
-    theme_text_color: "Primary"
-    markup: True
-
-<InputInToolbar@MDTextFieldRect>:
-    hint_text: "Identifiant..."
-    multiline: False
-    size_hint: (0.75, 0.8)
-    font_size: self.height-19
-
-<UpdateLabel@MDLabel>:
-    font_style: "H5"
-    theme_text_color: "Primary"
-    size_hint: (0.5, 1)
-    pos_hint: {"center_x": 0.5, "center_y": 0.5}
-    spacing: 9
-
-<UpdateInput@MDTextFieldRect>:
-    multiline: False
-    font_size: self.height-19
-
-<UpdateGrid@MDGridLayout>:
-    cols: 2
-    size_hint: (1, 1)
-    padding: 9
-
-<IContent@MDBoxLayout>:
-    orientation: "vertical"
-    adaptive_height: True
-    MDBoxLayout:
-        orientation: "horizontal"
-        adaptive_height: True
-        padding: 6
-        MDBoxLayout:
-            orientation: "vertical"
-            adaptive_height: True
-            MDFillRoundFlatButton:
-                id: identifiant
-                size_hint: (0.5, 0.5)
-                pos_hint: {"center_x": 0.5, "center_y": 0.5}
-                font_size: self.height-19
-    
-        MDBoxLayout:
-            orientation: "vertical"
-            adaptive_height: True
-            InfosLabel:
-                text: "[color=#ffff00][b][u]EMPLOYER[/u][/b][/color]"
-                halign: "left"
-                font_size: 24
-            InfosLabel:
-                id: icontent_user
-                halign: "left"
-                font_size: 24
-            InfosLabel:
-                id: icontent_salaire
-                halign: "left"
-                font_size: 24
-            InfosLabel:
-                id: icontent_user_date
-                halign: "left"
-                font_size: 24
-        MDBoxLayout:
-            orientation: "vertical"
-            adaptive_height: True
-            InfosLabel:
-                text: "[color=#ffff00][b][u]TUTEUR[/u][/b][/color]"
-                halign: "left"
-                font_size: 24
-            InfosLabel:
-                id: icontent_tuteur
-                halign: "left"
-                font_size: 24
-            InfosLabel:
-                id: icontent_tuteur_contact
-                halign: "left"
-                font_size: 24
-            InfosLabel:
-                id: icontent_tuteur_adress
-                halign: "left"
-                font_size: 24
-    MDSeparator:
-        height: 9
+                            on_release: root.clearUpdateID()
