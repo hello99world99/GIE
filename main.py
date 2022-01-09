@@ -20,6 +20,8 @@ class Body(MDBoxLayout):
     surnom = ObjectProperty(None)
     nom = ObjectProperty(None)
 
+    montantDette = ObjectProperty(None)
+
     MONTH = [
         "janvier", "fevrier", "mars", "avril",
         "mai", "juin", "juillet", "aout",
@@ -94,7 +96,7 @@ class Body(MDBoxLayout):
 
 #================================Employees==========================================
 
-    def showEmployeesList(self, filtre):
+    def showEmployeesList(self, filtre: str):
         self.ids["employees_list"].clear_widgets()
         to_find = filtre.capitalize()
         employees = []
@@ -304,9 +306,9 @@ class Body(MDBoxLayout):
 
 #================================Dette==========================================
 
-    def getUserInfosForDette(self, ID):
+    def getUserInfosForDette(self, ID: int):
         userID = ID
-        if (userID==""):
+        if (userID=="" or userID.isnumeric()==False):
             self.clearDette()
         else:
             userID = backend.DataBase.getEmployeeByID(ID)
@@ -318,7 +320,7 @@ class Body(MDBoxLayout):
 
     def setDette(self, ID):
         userID = self.ids["idForDette"].text
-        montant = self.ids["detteMontant"].text
+        montant = self.montantDette.text
         userInfos = str()
         if (userID==""):
             self.ids["detteInfos"].text = "[color=#ffff00]Aucun(e) employée trouvée...[/color]"
@@ -330,8 +332,8 @@ class Body(MDBoxLayout):
                 Clock.schedule_once(self.hideDetteInfos, 3)
             elif (userID!="" and montant.isnumeric() and userInfos!=[]):
 
-                if (int(montant)<1000):
-                    self.ids["detteInfos"].text = "[color=#ffff00]Montant inférieur à (1 000 F)[/color]"
+                if (int(montant)<1000 or int(montant)>=1000000):
+                    self.ids["detteInfos"].text = "[color=#ffff00]Montant n'est pas dans la fourchette...[/color]"
                     Clock.schedule_once(self.hideDetteInfos, 3)
                 else:
                     backend.DataBase.setDette(userID, montant)
